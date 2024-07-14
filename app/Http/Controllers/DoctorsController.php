@@ -96,7 +96,7 @@ class DoctorsController extends Controller
     public function dashData(Request $request)
     {
         $doctor = Doctors::where('user_id', Auth::id())->first();
-        $appointments = $doctor->getAppointments()->where('status', 'pending')->get()->count();
+        $appointments = $doctor->getAppointments()->where('status', 'Scheduled')->get()->count();
         $completedAppointments = $doctor->getAppointments()->where('status', 'completed')->count();
         $health_records = HealthRecord::where('status', 'pending')->get()->count();
         $completedHealth_recors = HealthRecord::where('status', 'completed')->count();

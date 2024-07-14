@@ -17,6 +17,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PatientController extends Controller
 {
+    public function dashboardAction(Request $request)
+    {
+        $patient = Patient::where('user_id', Auth::id())->first();
+        $appointments = Appointment::where('patient_id', $patient->id)->count();
+        $records = HealthRecord::where('patient_id', $patient->id)->count();
+        return response()->json(compact('records', 'appointments'), 200);
+    }
     public function getSymptoms(Request $request)
     {
         $symptoms = Symptom::all();

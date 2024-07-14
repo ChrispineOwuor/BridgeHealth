@@ -34,8 +34,7 @@ Route::prefix('patient')->middleware(['auth:sanctum', 'patient-auth'])->group(fu
     Route::post('/chat', [PatientController::class, 'reminders']);
     Route::get('/symptoms', [PatientController::class, 'getSymptoms']);
     Route::get('/doctors', [PatientController::class, 'getDoctors']);
-
-
+    Route::get('/dash/data', [PatientController::class, 'dashboardAction']);
 });
 
 Route::prefix('admin')->middleware(['auth:sanctum', 'admin-auth'])->group(function () {
@@ -53,9 +52,7 @@ Route::prefix('doctor')->middleware(['auth:sanctum', 'doctor-auth'])->group(func
     Route::post('/add-symptom', [DoctorsController::class, 'addSymptom']);
     Route::put('/appointments/close', [DoctorsController::class, 'closeAppoint']);
     Route::get('/dash/data', [DoctorsController::class, 'dashData']);
-
-
-});  
+});
 
 Route::prefix('analytics')->middleware(['auth:sanctum', 'admin-auth'])->group(function () {
     Route::get('/all/records', [AnalyticsController::class, 'index']);
