@@ -5,74 +5,62 @@
 To install and run the application, follow these steps:
 
 1. Clone the repository:
-`git clone https://github.com/your-username/your-repository.git`
+   `git clone https://github.com/your-username/your-repository.git`
 
 2. Navigate to the project directory:
-   cd your-repository
+   `cd your-repository`
+
 3. Install dependencies:
-   composer install
+   `composer install`
 
 4. Set up the database:
-
-- Create a new database in your local environment.
-- Update the `.env` file with your database credentials.
-- Run the migration command:
-
-  ``` php
-
-  php artisan migrate
-  ```
+   - Create a new database in your local environment.
+   - Update the `.env` file with your database credentials.
+   - Run the migration command:
+     ```php
+     php artisan migrate
+     ```
 
 5. Start the development server:
-
-    - Run the server command:
-
-  ``` php
-
-  php artisan serve
-  ```
+   - Run the server command:
+     ```php
+     php artisan serve
+     ```
 
 ## Functionalities
 
 The application provides the following functionalities:
 
 1. **User Registration:**
+   - Users can register as patients, doctors, or administrators.
+   - Patient registration includes basic information such as name and email.
+   - Doctor and admin registration require additional information.
 
-- Users can register as patients, doctors, or administrators.
-- Patient registration includes basic information such as name and email.
-- Doctor and admin registration require additional information.
+2. **User Login:**
+   - Users can log in using their email and password.
+   - The application authenticates the user and generates an API token for subsequent requests.
 
- **User Login:**
+3. **User Logout:**
+   - Users can log out by invalidating their API token.
 
-- Users can log in using their email and password.
-- The application authenticates the user and generates an API token for subsequent requests.
+4. **Password Recovery:**
+   - Users can request a password reset link by providing their email.
+   - The application generates an OTP (One-Time Password) and sends it to the user's email.
+   - Users can verify the OTP and reset their password.
 
- **User Logout:**
+5. **Patient Management:**
+   - Patients can view their personal information.
+   - Patients can view their medical records.
+   - Patients can schedule appointments with doctors.
 
-- Users can log out by invalidating their API token.
+6. **Doctor Management:**
+   - Doctors can view their personal information.
+   - Doctors can view their appointments.
+   - Doctors can provide recommendations for patients.
 
- **Password Recovery:**
-
-- Users can request a password reset link by providing their email.
-- The application generates an OTP (One-Time Password) and sends it to the user's email.
-- Users can verify the OTP and reset their password.
-
-2. **Patient Management:**
-
-- Patients can view their personal information.
-- Patients can view their medical records.
-- Patients can schedule appointments with doctors.
-
-3. **Doctor Management:**
-
-- Doctors can view their personal information.
-- Doctors can view their appointments.
-- Doctors can provide recommendations for patients.
-
-4. **Admin Management:**
-
-- Admins can view their personal information.
-- Admins can manage user registrations, including approving or rejecting doctor and admin registrations.
+7. **Admin Management:**
+   - Admins can view their personal information.
+   - Admins can manage user registrations, including approving or rejecting doctor and admin registrations.
 
 ## API Endpoints
 
