@@ -13,6 +13,7 @@ use App\Models\RecordSymptomPivot;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 class PatientController extends Controller
@@ -83,6 +84,42 @@ class PatientController extends Controller
         $appointment->save();
 
         return response()->json(['msg' => 'Appointment booked successfully'], Response::HTTP_ACCEPTED);
+    }
+    public function updatePatient(Request $request)
+    {
+        $validatedData = $request->validate([
+            'email' => 'required|email|unique:users,email,' . Auth::id(),
+            'fullName' => 'required|string|max:255',
+            'phoneNumber' => 'required|max:15',
+            'emergencyContact' => 'required|max:15',
+            'residence' => 'required|string|max:255',
+            'date_of_birth' => 'required|date',
+            'blood_type' => 'required|string|max:3',
+        ]);
+
+        try {
+            $user = User::find(Auth::id());
+            $user->email = $validatedData['email'];
+            $user->name = $validatedData['fullName'];
+            error_log($user);
+            $user->save();
+            error_log($user);
+
+
+            $patient = Patient::where('user_id', $user->id)->first();
+            error_log($patient);
+
+            $patient->phoneNumber = $validatedData['phoneNumber'];
+            $patient->emergencyContact = $validatedData['emergencyContact'];
+            $patient->residence = $validatedData['residence'];
+            $patient->date_of_birth = $validatedData['date_of_birth'];
+            $patient->blood_type  = $validatedData['blood_type'];
+            $patient->save();
+
+            return response()->json(['message' => 'Profile updated successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
 
     // Get all records

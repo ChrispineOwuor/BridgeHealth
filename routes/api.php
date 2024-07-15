@@ -35,6 +35,7 @@ Route::prefix('patient')->middleware(['auth:sanctum', 'patient-auth'])->group(fu
     Route::get('/symptoms', [PatientController::class, 'getSymptoms']);
     Route::get('/doctors', [PatientController::class, 'getDoctors']);
     Route::get('/dash/data', [PatientController::class, 'dashboardAction']);
+    Route::put('/profile/update', [PatientController::class, 'updatePatient']);
 });
 
 Route::prefix('admin')->middleware(['auth:sanctum', 'admin-auth'])->group(function () {

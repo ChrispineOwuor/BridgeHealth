@@ -16,9 +16,8 @@ use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -27,8 +26,21 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $user = User::find(Auth::user());
+        if ($user[0]->role === 'patient') {
+            $patient = Patient::where('user_id', $user[0]->id)->first();
+            $user[0]->Patient = $patient;
+        }
+        if ($user[0]->role === 'doctor') {
+            $doctor = Doctors::where('user_id', $user[0]->id)->first();
+            $user[0]->doctor = $doctor;
+        }
+        if ($user[0]->role === 'admin') {
+            $admin = Admins::where('user_id', $user[0]->id)->first();
+            $user[0]->admin = $admin;
+        }
         return response()->json(['user' => $user, "msg" => "success", Response::HTTP_ACCEPTED]);
     }
+
 
     public function register(RegisterUserRequest $request)
     {
@@ -97,7 +109,6 @@ class UserController extends Controller
             $token->delete();
         });
         return response()->json(["status" => "success", "message" => "Successfully logged out"], Response::HTTP_OK);
-
     }
     public function requestOtp(MakeOtpRequest $request)
     {
